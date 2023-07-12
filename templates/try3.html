@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .form-container {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="flex h-screen bg-gray-200">
+    <!-- Side Menu Bar -->
+    <aside class="bg-gray-800 w-64">
+      <nav class="mt-10">
+        <!-- Menu items -->
+        <!-- Add your menu items here -->
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <header class="bg-white shadow">
+        <!-- Header content -->
+      </header>
+
+      <main class="flex-1 overflow-x-auto bg-white">
+        <div class="container mx-auto py-6 px-4">
+          <h1 class="text-2xl font-semibold mb-4">Assets</h1>
+
+          <!-- Add New Button -->
+          <button id="addNewBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Add New</button>
+
+          <!-- Form -->
+          <div id="formContainer" class="form-container">
+            <form id="hardwareForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">{% csrf_token%}
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="assetId">Asset ID:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="assetId" type="text" placeholder="Enter Asset ID">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="hardware">Hardware:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="hardware" type="text" placeholder="Enter Hardware">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="location">Location:</label>
+                <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="location">
+                  <option value="">Select Location</option>
+                  <option value="New York">New York</option>
+                  <option value="London">London</option>
+                  <option value="Paris">Paris</option>
+                  <option value="Tokyo">Tokyo</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="cost">Cost:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cost" type="text" placeholder="Enter Cost">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="buyDate">Buy Date:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="buyDate" type="text" placeholder="Enter Buy Date">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="warranty">Warranty:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="warranty" type="text" placeholder="Enter Warranty">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="allotment">Allotment:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="allotment" type="text" placeholder="Enter Allotment">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="status">Status:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="status" type="text" placeholder="Enter Status">
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="software">Software:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="software" type="text" placeholder="Enter Software">
+              </div>
+              <div class="flex items-center justify-end">
+                <button id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Submit</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="overflow-auto">
+            <table class="table-auto w-full">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2">Asset ID</th>
+                  <th class="px-4 py-2">Hardware</th>
+                  <th class="px-4 py-2">Location</th>
+                  <th class="px-4 py-2">Cost</th>
+                  <th class="px-4 py-2">Buy Date</th>
+                  <th class="px-4 py-2">Warranty</th>
+                  <th class="px-4 py-2">Allotment</th>
+                  <th class="px-4 py-2">Status</th>
+                  <th class="px-4 py-2">Software</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                {%for n in hdata%}
+                  <tr>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.asset_id}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.hardware_name}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.location}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.price}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.buy_date}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.warranty}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.allotment}}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      <span class="bg-yellow-500 text-white px-2 py-1 rounded"
+                        >{{n.status}}</span
+                      >
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-300">
+                      {{n.softwares}}
+                    </td>
+                  </tr>
+                  {%endfor%}
+                <!-- Add more table rows here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const addNewBtn = document.getElementById('addNewBtn');
+      const formContainer = document.getElementById('formContainer');
+      const submitBtn = document.getElementById('submitBtn');
+      const hardwareForm = document.getElementById('hardwareForm');
+      const tableBody = document.getElementById('tableBody');
+
+      addNewBtn.addEventListener('click', () => {
+        formContainer.style.display = 'block';
+      });
+
+      submitBtn.addEventListener('click', () => {
+        const assetId = document.getElementById('assetId').value;
+        const hardware = document.getElementById('hardware').value;
+        const location = document.getElementById('location').value;
+        const cost = document.getElementById('cost').value;
+        const buyDate = document.getElementById('buyDate').value;
+        const warranty = document.getElementById('warranty').value;
+        const allotment = document.getElementById('allotment').value;
+        const status = document.getElementById('status').value;
+        const software = document.getElementById('software').value;
+
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td class="px-4 py-2">${assetId}</td>
+          <td class="px-4 py-2">${hardware}</td>
+          <td class="px-4 py-2">${location}</td>
+          <td class="px-4 py-2">${cost}</td>
+          <td class="px-4 py-2">${buyDate}</td>
+          <td class="px-4 py-2">${warranty}</td>
+          <td class="px-4 py-2">${allotment}</td>
+          <td class="px-4 py-2">${status}</td>
+          <td class="px-4 py-2">${software}</td>
+        `;
+
+        tableBody.appendChild(newRow);
+
+        hardwareForm.reset();
+        formContainer.style.display = 'none';
+      });
+    </script>
+  </div>
+</body>
+</html>

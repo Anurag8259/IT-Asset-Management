@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add User Form</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+          .form-container {
+            display: none;
+          }
+          .break {
+              flex-basis: 100%;
+              height: 0;
+            }
+        </style>
+      </head>
+    <body>
+      
+      <div class="flex justify-center items-center h-screen">
+        <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+          <h2 class="text-2xl font-bold mb-4">Create a New User</h2>
+          <form method="POST" action="{% url 'create_user' %}" class="space-y-4">
+            {% csrf_token %}
+            
+            <div>
+              <label for="username" class="block text-gray-700 font-bold">Username:</label>
+              <input type="text" name="username" id="username" class="border border-gray-400 rounded px-3 py-2 w-full">
+            </div>
+            
+            <div>
+              <label for="password" class="block text-gray-700 font-bold">Password:</label>
+              <input type="password" name="password" id="password" class="border border-gray-400 rounded px-3 py-2 w-full">
+            </div>
+            
+            <div>
+              <label for="confirm_password" class="block text-gray-700 font-bold">Confirm Password:</label>
+              <input type="password" name="confirm_password" id="confirm_password" class="border border-gray-400 rounded px-3 py-2 w-full">
+            </div>
+            
+            <div>
+              <label for="role" class="block text-gray-700 font-bold">Role:</label>
+              <select name="role" onchange="func()" id="role" class="border border-gray-400 rounded px-3 py-2 w-full">
+                <option value="super admin">Super Admin</option>
+                <option value="admin">Admin</option>
+                <option value="itmanager">IT Manager</option>
+                <option value="employee">Employee</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-gray-700 text-sm font-bold mb-2 hidden" for="location">Location:</label>
+              <select id="location" name="location" class="hidden border border-gray-400 rounded px-3 py-2 w-full">
+                <option value="none" selected disabled hidden>Select</option>
+                {% for n in ldata %}
+                <option value="{{ n.id }}">{{ n.location_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="flex justify-between">
+              <a href="/dashboard" id="backBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline form-control" >Back to Dashboard</a>
+
+              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded">Create User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+    </body>
+    <script>
+        inputField.style.display = "none";
+        
+        function func(){
+            var selectedOption = document.getElementById("role").value;
+            var location = document.getElementById('location');
+            
+            if (selectedOption == "itmanager") {
+                location.style.display = "block";
+            } else {
+                inputField.style.display = "none";
+              }
+        }
+    </script>
+</html>
