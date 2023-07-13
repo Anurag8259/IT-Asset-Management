@@ -6,6 +6,8 @@ from network_device.models import NetworkDevice
 from printer.models import Printer
 from pc.models import PC
 import csv
+import datetime
+from datetime import timedelta
 from software.models import Software
 from location.models import Location
 from Employee.models import Employees
@@ -51,7 +53,7 @@ def PCPage(req):
         locid=req.POST.get("location")
         cp=req.POST.get('cost')
         bd=req.POST.get('buyDate')
-        war=req.POST.get('warranty')
+        warr=req.POST.get('warranty')
         emptid=req.POST.get("employee")        
         ai=req.POST.get('assetId')
         sn=req.POST.get('serialNo')
@@ -64,12 +66,15 @@ def PCPage(req):
         os=req.POST.get('os')
         c=req.POST.get('cpu')
         ip=req.POST.get('ipAddress')
+        war=int(warr)
+        buy_date = datetime.datetime.strptime(bd, '%Y-%m-%d').date()
+        expiry = buy_date + timedelta(days=war * 365)
         sofname=[x.software_name for x in Software.objects.all()]
         sofid=[]
         for x in sofname:
             sofid.append(int(req.POST.get(x))) if req.POST.get(x) else print("Null")
 
-        new_block=PC.objects.create(pc_name=name,location_id=locid,price=cp,buy_date=bd,warranty=war,employee_id=emptid,status=st,asset_id=ai,serial_no=sn,model=m,make=mk,ram=rm,hdd=hd,catagory=cat,cpu=c,operating_system=os,ip_address=ip)
+        new_block=PC.objects.create(pc_name=name,expiry=expiry,location_id=locid,price=cp,buy_date=bd,warranty=war,employee_id=emptid,status=st,asset_id=ai,serial_no=sn,model=m,make=mk,ram=rm,hdd=hd,catagory=cat,cpu=c,operating_system=os,ip_address=ip)
         for x in sofid:
             new_block.softwares.add(Software.objects.get(id=x))
         new_block.save()

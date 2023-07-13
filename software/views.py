@@ -6,12 +6,13 @@ from network_device.models import NetworkDevice
 from printer.models import Printer
 from pc.models import PC
 import csv
-from software.models import Software
+from software.models import Software,File
 from location.models import Location
 from Employee.models import Employees
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
+import pandas as pd
 flag=2
 @login_required
 def SoftwarePage(req):
@@ -85,24 +86,45 @@ def exportsof(request):
 
     return response
 
-def upload_csv(request):
-    if request.method == 'POST':
-        csv_file = request.FILES.get('csv_file')  # Get the uploaded file
+# def upload_csv(request):
+#     if request.method == 'POST':
+#         csv_file = request.FILES.get('csv_file') 
         
-        if csv_file:
-            decoded_file = csv_file.read().decode('utf-8')  # Read and decode the file contents
+#         if csv_file:
+#             decoded_file = csv_file.read().decode('utf-8') 
             
-            # Process the CSV data and create Software objects
-            csv_reader = csv.DictReader(decoded_file.splitlines())
-            for row in csv_reader:
-                software = Software(
-                    software_name=row['software_name'],
-                    buy_date=row['buy_date'],
-                    price=row['price'],
-                    version=row['version'],
-                    vendor=row['vendor'],
-                    validity=row['validity']
-                )
-                software.save()  # Save each Software object to the database
+#             # Process the CSV data and create Software objects
+#             csv_reader = csv.DictReader(decoded_file.splitlines())
+#             for row in csv_reader:
+#                 software = Software(
+#                     software_name=row['software_name'],
+#                     buy_date=row['buy_date'],
+#                     price=row['price'],
+#                     version=row['version'],
+#                     vendor=row['vendor'],
+#                     validity=row['validity']
+#                 )
+#                 software.save()  # Save each Software object to the database
 
-    return render(request, 'software.html')
+#     return render(request, 'software.html')
+def create_db(file_path):
+    df=pd.read_csv(file_path,delimiter=',')
+    print(df.values)
+    list_of_csv=[list(row) for row in df.values]
+
+    for l in list_of_csv:
+        Software.objects.create(
+                    software_name=l[1],
+                    buy_date=l[2],
+                    price=l[3],
+                    version=l[4],
+                    vendor=l[5],
+                    validity=l[6]
+        )
+        Software.save()
+def readcsv(req):
+    if req.method == "POST":
+        file=req.FILES['files']
+        obj=File.objects.create(file = file)
+        create_db(obj.file)
+    return render(req,'software.html')

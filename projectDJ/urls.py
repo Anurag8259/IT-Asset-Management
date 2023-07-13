@@ -58,6 +58,6 @@ urlpatterns = [
     path('exportprinter/',printerviews.exportprinter),
     path('export/',views.export),
     path('userRole/',views.userRole),
-    path('upload/', sofviews.upload_csv, name='upload_csv'),
+    path('upload/', sofviews.readcsv, name='upload_csv'),
     # path('course/<courseid>',views.courseDetails),
 ]

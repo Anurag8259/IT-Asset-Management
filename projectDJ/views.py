@@ -175,7 +175,21 @@ def RequestPage(req):
         prdata=Printer.objects.all()
         nddata=NetworkDevice.objects.all()
         mdata=MiscDevice.objects.all()
+        flag=3
+        if req.user.is_authenticated:
+            user = req.user
+            if hasattr(user, 'myuser'):
+                role = user.myuser.role
+                if role=='superadmin':
+                    flag=0
+                elif role=='admin':
+                    flag=1
+                elif role=='itmanager':
+                    flag=2
+                elif role=='employee':
+                    flag=3
         data={
+            'flag':flag,
             'mdata':mdata,
             'nddata':nddata,
             'prdata':prdata,
@@ -184,8 +198,7 @@ def RequestPage(req):
             'sdata':sdata,
             'edata':edata
         }
-        if req.user.is_superuser:
-            data['flag']=1
+        
         return render(req,"request.html",data)
     pdata=PC.objects.all()
     edata=Employees.objects.all()
@@ -194,7 +207,21 @@ def RequestPage(req):
     prdata=Printer.objects.all()
     nddata=NetworkDevice.objects.all()
     mdata=MiscDevice.objects.all()
+    flag=3
+    if req.user.is_authenticated:
+            user = req.user
+            if hasattr(user, 'myuser'):
+                role = user.myuser.role
+                if role=='superadmin':
+                    flag=0
+                elif role=='admin':
+                    flag=1
+                elif role=='itmanager':
+                    flag=2
+                elif role=='employee':
+                    flag=3
     data={
+            'flag':flag,
         'mdata':mdata,
         'nddata':nddata,
         'prdata':prdata,

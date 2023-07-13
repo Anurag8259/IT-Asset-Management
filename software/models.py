@@ -6,7 +6,9 @@ valid_choice=[
     ('lifetime','Lifetime'),
     ('monthly','Monthly')
 ]
-# Create your models here.
+class File(models.Model):
+    file=models.FileField(upload_to="files")
+
 class Software(models.Model):
     software_name=models.CharField(max_length=50)
     buy_date=models.DateField()
@@ -18,14 +20,4 @@ class Software(models.Model):
     def __str__(self):
         return self.software_name
     
-    # hardware=models.ManyToManyField(hardware.models.Hardware)
-#     class Meta:
-#         ordering=['software_name']
-#     def __str__(self):
-#         return self.software_name
-# class Hardware(models.Model):
-#     hardwares=models.CharField(max_length=50)
-#     class Meta:
-#         ordering=['hardwares']
-#     def __str__(self):
-#         return self.hardwares
+    

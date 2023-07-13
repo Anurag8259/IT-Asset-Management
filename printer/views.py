@@ -6,6 +6,8 @@ from network_device.models import NetworkDevice
 from printer.models import Printer
 from pc.models import PC
 import csv
+import datetime
+from datetime import timedelta
 from software.models import Software
 from location.models import Location
 from Employee.models import Employees
@@ -59,10 +61,13 @@ def PrinterPage(req):
         tp=req.POST.get('type')
         pr=req.POST.get('price')
         bd=req.POST.get('buyDate')
-        war=req.POST.get('warranty')
+        warr=req.POST.get('warranty')
         st=req.POST.get('status')
         emp=req.POST.get('employee')
-        new_block=Printer.objects.create(asset_id=ai,printer_name=name,desc=de,location_id=loc,serial_no=sn,model=m,make=mk,type=tp,price=pr,buy_date=bd,warranty=war,status=st,employee_id=emp)
+        war=int(warr)
+        buy_date = datetime.datetime.strptime(bd, '%Y-%m-%d').date()
+        expiry = buy_date + timedelta(days=war * 365)
+        new_block=Printer.objects.create(asset_id=ai,printer_name=name,desc=de,location_id=loc,serial_no=sn,model=m,expiry=expiry,make=mk,type=tp,price=pr,buy_date=bd,warranty=war,status=st,employee_id=emp)
         new_block.save()
         pdata=PC.objects.all()
         prdata=Printer.objects.all()

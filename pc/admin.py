@@ -6,7 +6,7 @@ class PCForm(admin.ModelAdmin):
         super().__init__(*args,**kwargs)
         self.fields['pc_name','employee','status'].required=True
 class PCAdmin(admin.ModelAdmin):
-    list_display=('pc_name','asset_id','serial_no','model','make','ram','hdd','catagory','operating_system','cpu','ip_address','buy_date','employee','price','warranty','status','get_software')
+    list_display=('pc_name','asset_id','serial_no','model','make','ram','hdd','catagory','operating_system','cpu','ip_address','buy_date','employee','price','warranty','expiry','status','get_software')
 
 # model_list=[Hardware,Softwares]
 admin.site.register(PC,PCAdmin)

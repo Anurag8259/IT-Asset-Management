@@ -206,9 +206,9 @@
           {% if flag == 0 or flag == 1%}
           <button id="addNewBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Add New</button>          <!--Request-->
           {%endif%}
-          {% if flag == 2 %}
+          {% comment %} {% if flag == 2 %}
           <button id="addNewBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Add Request</button>
-          {%endif%}
+          {%endif%} {% endcomment %}
           <input id="flag" value={{flag}} class="invisible">
           <div class="mt-6 md:flex md:items-center md:justify-between">
             <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">

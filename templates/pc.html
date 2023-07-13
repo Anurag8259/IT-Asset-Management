@@ -367,6 +367,9 @@
                               Warranty
                             </th>
                             <th scope="col" class="px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                              Expiry Date
+                            </th>
+                            <th scope="col" class="px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
                               Employee
                             </th>
                             <th scope="col" class="px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -435,6 +438,9 @@
                               {{ n.warranty }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+                              {{ n.expiry }}
+                            </td>
+                            <td class="px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">
                               {{ n.employee }}
                             </td>
                             <td class="px-4 py-3 text-sm font-medium">
@@ -498,25 +504,48 @@
       }
       function showInputField(){
         const selectedField = filterField.value;
+        const locinp=document.getElementById("locinp");
+        const assetinp=document.getElementById("assetinp");
+        const devinp=document.getElementById("devinp");
+        const descinp=document.getElementById("descinp");
+        const slinp=document.getElementById("slinp");
         if(selectedField == 'location' ){
-          const locinp=document.getElementById("locinp");
+          
           locinp.style.display='block';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
+
         }
         if(selectedField == 'asset_id' ){
-          const locinp=document.getElementById("assetinp");
-          locinp.style.display='block';
+
+          assetinp.style.display='block';
+          locinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'device_name' ){
-          const locinp=document.getElementById("devinp");
-          locinp.style.display='block';
+          devinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'description' ){
-          const locinp=document.getElementById("descinp");
-          locinp.style.display='block';
+          descinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'sl_no' ){
-          const locinp=document.getElementById("slinp");
-          locinp.style.display='block';
+          slinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
         }
         
       }

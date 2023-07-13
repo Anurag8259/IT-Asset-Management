@@ -223,6 +223,7 @@
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="warranty">Warranty:</label>
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="warranty" name="warranty" type="number" placeholder="Enter Warranty">
               </div>
+              
               <div>
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="allotment">Employee:</label>
                 <select id="employee" name="employee" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -332,6 +333,8 @@
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Buy Date</th>
       
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Warranty</th>
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Expiry Date</th>
+
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                       Status
                                     </th>
@@ -377,6 +380,9 @@
                                   </td>
                                   <td class="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-500 dark:text-gray-400">
                                     {{n.warranty}}
+                                  </td>
+                                  <td class="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-500 dark:text-gray-400">
+                                    {{n.expiry}}
                                   </td>
                                   <td class="px-4 py-3 text-sm font-medium">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -442,28 +448,52 @@
       }
       function showInputField(){
         const selectedField = filterField.value;
+        const locinp=document.getElementById("locinp");
+        const assetinp=document.getElementById("assetinp");
+        const devinp=document.getElementById("devinp");
+        const descinp=document.getElementById("descinp");
+        const slinp=document.getElementById("slinp");
         if(selectedField == 'location' ){
-          const locinp=document.getElementById("locinp");
+          
           locinp.style.display='block';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
+
         }
         if(selectedField == 'asset_id' ){
-          const locinp=document.getElementById("assetinp");
-          locinp.style.display='block';
+
+          assetinp.style.display='block';
+          locinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'device_name' ){
-          const locinp=document.getElementById("devinp");
-          locinp.style.display='block';
+          devinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          descinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'description' ){
-          const locinp=document.getElementById("descinp");
-          locinp.style.display='block';
+          descinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          slinp.style.display='none';
         }
         if(selectedField == 'sl_no' ){
-          const locinp=document.getElementById("slinp");
-          locinp.style.display='block';
+          slinp.style.display='block';
+          locinp.style.display='none';
+          assetinp.style.display='none';
+          devinp.style.display='none';
+          descinp.style.display='none';
         }
         
       }
+      
       function filterTableByLocation(value) {
         const tableRows = document.querySelectorAll("#tableBody tbody tr");
     

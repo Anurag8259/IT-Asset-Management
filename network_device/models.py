@@ -18,4 +18,14 @@ class NetworkDevice(models.Model):
     warranty=models.IntegerField()
     ip_address=models.CharField(max_length=20)
     status=models.CharField(max_length=50,null=True)
+    expiry = models.DateField(null=True, blank=True)
     employee=models.ForeignKey(Employees,on_delete=models.PROTECT,null=True)
+
+    # def save(self, *args, **kwargs):
+    #     # Calculate expiry based on buy_date and warranty
+    #     if self.buy_date and self.warranty:
+    #         self.expiry = self.buy_date + datetime.timedelta(days=self.warranty * 365)
+    #     super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.asset_id
